@@ -21,13 +21,9 @@ if (function_exists('getallheaders')) {
 removeGoogleAdsense ();
 
 $data = array (
+    "Client IP" => get_ip_address (),
     'method' => $_SERVER['REQUEST_METHOD'],
     'headers' => $all_headers,
-    'request' => $_REQUEST,
-//    'server' => $_REQUEST, // only advisable for debug, don't make public
-    'client_ip' => get_ip_address (),
-    'time_utc' => gmdate (DATE_ISO8601),
-    'info' => 'Echo service from Scooterlabs (http://www.scooterlabs.com)',
 );
 
 $uri = $_SERVER['REQUEST_URI'];
