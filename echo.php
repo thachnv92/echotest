@@ -30,6 +30,12 @@ function formatData($data) {
     ]);
 };
 
+function logData($data) {
+    $file = fopen("/var/log/request.log", "a");
+    fwrite($file,"$data \n");
+    fclose($file);
+}
+
 
 $data = array (
     "Client IP" => get_ip_address (),
@@ -49,9 +55,7 @@ if (isset($_REQUEST['ip'])) {
     print array_to_xml ($data, new SimpleXMLElement ('<echo/>'))->asXML();
 } else {
     header ("Content-type: text/plain");
-    $log = fopen("/var/log/request.log", "w")
-    fwrite($log, formatData($data))
-    fclose($log)
+    logData(formatData($data))
     print_r (formatData($data));
 }
 
