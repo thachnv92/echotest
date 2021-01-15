@@ -20,9 +20,18 @@ if (function_exists('getallheaders')) {
 // remove any Google Adsense cookies to clean up the output
 removeGoogleAdsense ();
 
+function formatData($data) {
+    return json_encode([
+        "Client IP" => isset($data["Client IP"]) ? $data["Client IP"] : "",
+        "Host" => isset($data["headers"]["Host"]) ? $data["headers"]["Host"] : "" ,
+        "User-Agent" => isset($data["headers"]["User-Agent"]) ? $data["headers"]["User-Agent"] : "",
+        "Accept" => isset($data["headers"]["Accept"]) ? $data["headers"]["Accept"] : "",
+    ]);
+};
+
+
 $data = array (
     "Client IP" => get_ip_address (),
-    'method' => $_SERVER['REQUEST_METHOD'],
     'headers' => $all_headers,
 );
 
@@ -38,12 +47,7 @@ if (isset($_REQUEST['ip'])) {
     print array_to_xml ($data, new SimpleXMLElement ('<echo/>'))->asXML();
 } else {
     header ("Content-type: text/plain");
-    print <<<EOT
-Simple webservice echo test: make a request to this endpoint to return the HTTP request parameters and headers. Results available in plain text, JSON, or XML formats. See http://www.cantoni.org/2012/01/08/simple-webservice-echo-test for more details, or https://github.com/bcantoni/echotest for source code.
-
-
-EOT;
-    print_r ($data);
+    print_r (formatData($data));
 }
 
 /*
@@ -99,4 +103,3 @@ function get_ip_address() {
     }
     return ('');
 }
-
