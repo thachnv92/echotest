@@ -112,3 +112,7 @@ and add the following to your Apache config or local `.htaccess` file:
 If you install `echo.php` into a location other than the root of your
 web server, you'll need to adjust the rewrite rules a bit.
 
+sudo systemctl restart rsyslog
+sudo systemctl reload rsyslog
+logrotate /etc/logrotate.d/haproxy
+
