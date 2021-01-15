@@ -1,0 +1,11 @@
+"/var/log/haproxy.log" {
+    daily
+    size 100M
+    maxsize 100M
+    rotate 52
+    create 644 root root
+    missingok
+    compress
+    notifempty
+    endscript
+}
