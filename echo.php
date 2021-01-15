@@ -22,6 +22,7 @@ removeGoogleAdsense ();
 
 function formatData($data) {
     return json_encode([
+        "Time" => isset($data["time_utc"]) ? $data["time_utc"] : "",
         "Client IP" => isset($data["Client IP"]) ? $data["Client IP"] : "",
         "Host" => isset($data["headers"]["Host"]) ? $data["headers"]["Host"] : "" ,
         "User-Agent" => isset($data["headers"]["User-Agent"]) ? $data["headers"]["User-Agent"] : "",
@@ -33,6 +34,7 @@ function formatData($data) {
 $data = array (
     "Client IP" => get_ip_address (),
     'headers' => $all_headers,
+    'time_utc' => gmdate (DATE_ISO8601),
 );
 
 $uri = $_SERVER['REQUEST_URI'];
@@ -47,6 +49,9 @@ if (isset($_REQUEST['ip'])) {
     print array_to_xml ($data, new SimpleXMLElement ('<echo/>'))->asXML();
 } else {
     header ("Content-type: text/plain");
+    $log = fopen("/var/log/request.log", "w")
+    fwrite($log, formatData($data))
+    fclose($log)
     print_r (formatData($data));
 }
 
