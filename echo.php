@@ -55,7 +55,7 @@ if (isset($_REQUEST['ip'])) {
     print array_to_xml ($data, new SimpleXMLElement ('<echo/>'))->asXML();
 } else {
     header ("Content-type: text/plain");
-    logData(formatData($data))
+    logData(formatData($data));
     print_r (formatData($data));
 }
 
